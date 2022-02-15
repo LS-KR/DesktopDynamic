@@ -8,7 +8,10 @@
         AllowsTransparency="True"
         Background="Transparent"
         ResizeMode="NoResize"
+        WindowState="Normal"
         WindowStyle="None"
+        ShowActivated="False"
+        WindowStartupLocation="Manual"
         mc:Ignorable="d"
         Loaded="Window_Loaded">
     <Grid>
