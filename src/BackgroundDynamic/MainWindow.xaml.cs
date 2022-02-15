@@ -140,6 +140,7 @@ namespace BackgroundDynamic
     public partial class MainWindow : Window
     {
         static IntPtr programHandle = IntPtr.Zero;
+        enum Mode { Video = 0, Web = 1 };
         public MainWindow()
         {
             InitializeComponent();
@@ -175,6 +176,8 @@ namespace BackgroundDynamic
             App.DoEvents();
             this.MVideo.Margin = new Thickness(0, 0, 0, 0);
             this.MVideo.MediaEnded += new RoutedEventHandler(media_MediaEnded);
+            Mode mode = new Mode();
+            mode = Mode.Video;
             if (!File.Exists("config.ini"))
             {
                 if (!File.Exists("Source.mp4"))
@@ -194,15 +197,29 @@ namespace BackgroundDynamic
                     string[] args = config[i].Split('=');
                     if (args[0].ToLower() == "source")
                     {
-                        try
+                        if (mode == Mode.Video)
                         {
-                            this.MVideo.Source = new Uri(args[1], UriKind.Relative);
-                            isf = true;
+                            try
+                            {
+                                this.MVideo.Source = new Uri(args[1], UriKind.RelativeOrAbsolute);
+                                isf = true;
+                            }
+                            catch
+                            {
+                                isf = false;
+                                throw;
+                            }
                         }
-                        catch
+                        else if (mode == Mode.Web)
                         {
-                            isf = false;
-                            throw;
+                            try
+                            {
+                                this.webview.Source = new Uri(args[1]);
+                            }
+                            catch
+                            {
+                                throw;
+                            }
                         }
                     }
                     else if (args[0].ToLower() == "volume")
@@ -214,6 +231,19 @@ namespace BackgroundDynamic
                         catch
                         {
                             throw;
+                        }
+                    }
+                    else if (args[0].ToLower() == "mode")
+                    {
+                        if (args[1].ToLower() == "video")
+                            mode = Mode.Video;
+                        else if (args[1].ToLower() == "web")
+                        {
+                            mode = Mode.Web;
+                            if (isf)
+                            {
+                                this.webview.Source = this.MVideo.Source;
+                            }
                         }
                     }
                     if (!isf)
@@ -228,7 +258,10 @@ namespace BackgroundDynamic
                     }
                 }
             }
-            this.MVideo.Play();
+            if (mode == Mode.Video)
+                this.MVideo.Play();
+            else if(mode == Mode.Web)
+                this.webview.Visibility = Visibility.Visible;
         }
         private void media_MediaEnded(object sender, RoutedEventArgs e)
         {
