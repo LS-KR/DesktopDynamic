@@ -1,5 +1,5 @@
 # DesktopDynamic
-A simple program that can use video as wallpaper
+A simple program that can use a video or a web page as wallpaper
 
 ## Configuration file
 Use the config.ini in the working directory to configure the action.  
