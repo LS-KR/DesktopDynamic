@@ -10,6 +10,5 @@ Note that there can be no spaces at both ends of the spaces in config.ini!
 > * web:Source is a html file or a web link.  
 > * video:Source is a video file.Now supports mp4 and mov.  
 
-Closing the program requires killing the process  
-
-*Multiple monitors are not supported*
+*Multiple monitors are not supported*  
+*Taskbar icon now supported*
