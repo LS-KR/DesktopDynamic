@@ -93,7 +93,6 @@ namespace BackgroundDynamic
             /// </summary>
             GW_ENABLEDPOPUP = 6
         }
-
         /*GetWindowCmd指定结果窗口与源窗口的关系，它们建立在下述常数基础上：
               GW_CHILD
               寻找源窗口的第一个子窗口
@@ -141,9 +140,17 @@ namespace BackgroundDynamic
     {
         static IntPtr programHandle = IntPtr.Zero;
         enum Mode { Video = 0, Web = 1 };
+        private NotifyIcon notifyIcon = new NotifyIcon();
         public MainWindow()
         {
             InitializeComponent();
+            this.notifyIcon.Text = "DynamicBackground";
+            System.Windows.Forms.MenuItem exit = new System.Windows.Forms.MenuItem("Quit");
+            exit.Click += new EventHandler(Exit_Handle);
+            System.Windows.Forms.MenuItem[] children = new System.Windows.Forms.MenuItem[] { exit };
+            notifyIcon.ContextMenu = new System.Windows.Forms.ContextMenu(children);
+            notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            notifyIcon.Visible = true;
             SendMsgToProgman();
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -246,7 +253,10 @@ namespace BackgroundDynamic
                             }
                         }
                     }
-                    if (!isf)
+                }
+                if (!isf)
+                {
+                    if (mode == Mode.Video)
                     {
                         if (!File.Exists("Source.mp4"))
                         {
@@ -291,6 +301,11 @@ namespace BackgroundDynamic
                 }
                 return true;
             }, IntPtr.Zero);
+        }
+        public void Exit_Handle(object sender, EventArgs e)
+        {
+            notifyIcon.Dispose();
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }
