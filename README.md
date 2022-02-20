@@ -11,4 +11,5 @@ Note that there can be no spaces at both ends of the spaces in config.ini!
 > * video:Source is a video file.Now supports mp4 and mov.  
 
 *Multiple monitors are not supported*  
-*Taskbar icon now supported*
+*Taskbar icon now supported*  
+*Start when logon now available(Administrator permission)*
