@@ -53,8 +53,11 @@ namespace BackgroundDynamic
     public partial class MainWindow : Window
     {
         static IntPtr programHandle = IntPtr.Zero;
+        static bool playing = false;
+        static bool ismute = false;
         enum Mode { Video = 0, Web = 1 };
         private NotifyIcon notifyIcon = new NotifyIcon();
+        Mode mode = new Mode();
         public MainWindow()
         {
             InitializeComponent();
@@ -65,7 +68,6 @@ namespace BackgroundDynamic
         {
             dwm_init();
             scale_init();
-            Mode mode = new Mode();
             mode = Mode.Video;
             if (!File.Exists("config.ini"))
             {
@@ -84,13 +86,13 @@ namespace BackgroundDynamic
                 for (int i = 0; i < config.Length; i++)
                 {
                     string[] args = config[i].Split('=');
-                    if (args[0].ToLower() == "source")
+                    if (args[0].ToLower().Trim() == "source")
                     {
                         if (mode == Mode.Video)
                         {
                             try
                             {
-                                this.MVideo.Source = new Uri(args[1], UriKind.RelativeOrAbsolute);
+                                this.MVideo.Source = new Uri(args[1].Trim(), UriKind.RelativeOrAbsolute);
                                 isf = true;
                             }
                             catch
@@ -103,7 +105,7 @@ namespace BackgroundDynamic
                         {
                             try
                             {
-                                this.webview.Source = new Uri(args[1]);
+                                this.webview.Source = new Uri(args[1].Trim());
                             }
                             catch
                             {
@@ -111,22 +113,22 @@ namespace BackgroundDynamic
                             }
                         }
                     }
-                    else if (args[0].ToLower() == "volume")
+                    else if (args[0].ToLower().Trim() == "volume")
                     {
                         try
                         {
-                            this.MVideo.Volume = (Convert.ToDouble(args[1]) / 100.0);
+                            this.MVideo.Volume = (Convert.ToDouble(args[1].Trim()) / 100.0);
                         }
                         catch
                         {
                             throw;
                         }
                     }
-                    else if (args[0].ToLower() == "mode")
+                    else if (args[0].ToLower().Trim() == "mode")
                     {
-                        if (args[1].ToLower() == "video")
+                        if (args[1].ToLower().Trim() == "video")
                             mode = Mode.Video;
-                        else if (args[1].ToLower() == "web")
+                        else if (args[1].ToLower().Trim() == "web")
                         {
                             mode = Mode.Web;
                             if (isf)
@@ -151,9 +153,14 @@ namespace BackgroundDynamic
                 }
             }
             if (mode == Mode.Video)
+            {
                 this.MVideo.Play();
+                playing = true;
+            }
             else if(mode == Mode.Web)
+            {
                 this.webview.Visibility = Visibility.Visible;
+            }
         }
         /// <summary>
         /// 向桌面发送消息

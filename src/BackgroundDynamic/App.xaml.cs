@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Lierda.WPFHelper;
 
 namespace BackgroundDynamic
 {
@@ -13,9 +14,15 @@ namespace BackgroundDynamic
     /// </summary>
     public partial class App : Application
     {
+        LierdaCracker cracker = new LierdaCracker();
         private void Application_Startup(object sender, StartupEventArgs e)
         {
 
+        }
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            cracker.Cracker(1);
+            base.OnStartup(e);
         }
     }
 }

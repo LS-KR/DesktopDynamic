@@ -24,6 +24,7 @@ namespace BackgroundDynamic
 {
     public partial class MainWindow : Window
     {
+        private System.Windows.Forms.MenuItem mute = new System.Windows.Forms.MenuItem("Mute");//我知道这样看起来很糟糕,但因为之后需要更改mute.Checked,所以只能将其设为全局变量.见private void Mute_Click_Handle(object sender, EventArgs e),Handle.cs
         private void notify_init()
         {
             this.notifyIcon.Text = "DynamicBackground";
@@ -31,7 +32,10 @@ namespace BackgroundDynamic
             exit.Click += new EventHandler(Exit_Handle);
             System.Windows.Forms.MenuItem autostartup = new System.Windows.Forms.MenuItem("Start when login");
             autostartup.Click += new EventHandler(Autostartup_Handle);
-            System.Windows.Forms.MenuItem[] children = new System.Windows.Forms.MenuItem[] { autostartup, exit };
+            System.Windows.Forms.MenuItem playpause = new System.Windows.Forms.MenuItem("Pause/Play");
+            playpause.Click += new EventHandler(Play_Pause_Handle);
+            mute.Click += Mute_Click_Handle;
+            System.Windows.Forms.MenuItem[] children = new System.Windows.Forms.MenuItem[] { playpause, mute, autostartup, exit };
             notifyIcon.ContextMenu = new System.Windows.Forms.ContextMenu(children);
             notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             notifyIcon.Visible = true;
@@ -86,12 +90,9 @@ namespace BackgroundDynamic
                 if (this.Top > v.WorkingArea.Top)
                     this.Top = v.WorkingArea.Top;
             }
-            App.DoEvents();
             this.Width = SystemParameters.VirtualScreenWidth;
             this.Height = SystemParameters.VirtualScreenHeight;
-            App.DoEvents();
             this.MVideo.Margin = new Thickness(0, 0, 0, 0);
-            this.MVideo.MediaEnded += new RoutedEventHandler(media_MediaEnded);
         }
     }
 }

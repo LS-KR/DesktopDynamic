@@ -35,6 +35,39 @@ namespace BackgroundDynamic
                 }
             }
         }
+        public void Play_Pause_Handle(object sender, EventArgs e)
+        {
+            if (mode == Mode.Video)
+            {
+                if (playing)
+                {
+                    MVideo.Pause();
+                    playing = false;
+                }
+                else
+                {
+                    MVideo.Play();
+                    playing = true;
+                }
+            }
+            else
+            {
+                notifyIcon.ShowBalloonTip(2000, "无法执行操作", "您正在使用网页模式,不能暂停播放", System.Windows.Forms.ToolTipIcon.Warning);
+            }
+        }
+        private void Mute_Click_Handle(object sender, EventArgs e)
+        {
+            if (ismute)
+            {
+                this.MVideo.IsMuted = false;
+                mute.Checked = false;
+            }
+            else
+            {
+                this.MVideo.IsMuted = true;
+                mute.Checked = true;
+            }
+        }
         private void media_MediaEnded(object sender, RoutedEventArgs e)
         {
             (sender as MediaElement).Stop();
@@ -53,28 +86,29 @@ namespace BackgroundDynamic
             bool isexc = false;
             try
             {
-
                 RegistryKey RKey = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
                 //设置自启的程序叫获取目录下的程序名字
                 string[] ar = RKey.GetValueNames();
                 foreach (string st in ar)
                 {
-                    if (st.Equals("test"))
+                    if (st.Equals("BackgroundDynamic"))
                     {
                         isexc = true;
                     }
                 }
                 if (!isexc)
                 {
-                    //设置自启的程序叫test
-                    RKey.SetValue("test", execPath);
+                    RKey.SetValue("BackgroundDynamic", execPath);
                 }
-
-
+                try
+                {
+                    notifyIcon.ShowBalloonTip(2000, "设置完成", "您可以在任务管理器中关闭开机自启", System.Windows.Forms.ToolTipIcon.Info);
+                }
+                catch { }
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                notifyIcon.ShowBalloonTip(2000, "设置失败", ex.Message, System.Windows.Forms.ToolTipIcon.Error);
             }
         }
     }

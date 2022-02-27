@@ -40,6 +40,9 @@
     <ApplicationIcon>bgicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Lierda.WPFHelper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cbb49eab16984ff2, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lierda.WPFHelper.1.0.3\lib\net462\Lierda.WPFHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.WebView2.Core, Version=1.0.1108.44, Culture=neutral, PublicKeyToken=2a8ab48044d2601e, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.WebView2.1.0.1108.44\lib\net45\Microsoft.Web.WebView2.Core.dll</HintPath>
     </Reference>
