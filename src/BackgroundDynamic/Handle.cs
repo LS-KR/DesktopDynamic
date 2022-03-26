@@ -67,7 +67,7 @@ namespace BackgroundDynamic
                 this.MVideo.IsMuted = true;
                 mute.Checked = true;
             }
-            mute = !mute;
+            ismute = !ismute;
         }
         private void media_MediaEnded(object sender, RoutedEventArgs e)
         {

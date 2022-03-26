@@ -24,7 +24,7 @@ namespace BackgroundDynamic
 {
     public partial class MainWindow : Window
     {
-        private System.Windows.Forms.MenuItem mute = new System.Windows.Forms.MenuItem("Mute");//我知道这样看起来很糟糕,但因为之后需要更改mute.Checked,所以只能将其设为全局变量.见private void Mute_Click_Handle(object sender, EventArgs e),Handle.cs
+        private System.Windows.Forms.MenuItem mute = new System.Windows.Forms.MenuItem("Mute");//我知道这样看起来很糟糕, 但因为之后需要更改mute.Checked, 所以只能将其设为全局变量. 见private void Mute_Click_Handle(object sender, EventArgs e), in Handle.cs
         private void notify_init()
         {
             this.notifyIcon.Text = "DynamicBackground";
