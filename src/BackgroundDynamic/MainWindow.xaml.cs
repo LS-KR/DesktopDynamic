@@ -63,6 +63,12 @@ namespace BackgroundDynamic
             InitializeComponent();
             notify_init();
             SendMsgToProgman();
+            //检测显示器设备更改 + 屏幕分辨率更改
+            SystemEvents.DisplaySettingsChanged += new EventHandler((s, e) =>
+            {
+                dwm_init();
+                scale_init();
+            });
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -155,6 +161,7 @@ namespace BackgroundDynamic
             if (mode == Mode.Video)
             {
                 this.MVideo.Play();
+                this.MVideo.MediaEnded += media_MediaEnded;
                 playing = true;
             }
             else if(mode == Mode.Web)
