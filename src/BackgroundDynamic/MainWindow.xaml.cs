@@ -75,20 +75,48 @@ namespace BackgroundDynamic
             dwm_init();
             scale_init();
             mode = Mode.Video;
+            int cfgstat = -1;
+            int srcstat = -1;
+            string[] config = new string[1];
             if (!File.Exists("config.ini"))
+            {
+                if (!File.Exists(System.Windows.Forms.Application.StartupPath + "\\config.ini"))
+                    cfgstat = 0;
+                else
+                    cfgstat = 2;
+            }
+            else
+                cfgstat = 1;
+            if (cfgstat == 0)
             {
                 if (!File.Exists("Source.mp4"))
                 {
-                    System.Windows.MessageBox.Show("Cannot Found Config and Source File!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    System.Windows.Application.Current.Shutdown();
+                    if (!File.Exists(System.Windows.Forms.Application.StartupPath + "\\Source.mp4")) 
+                        srcstat = 0;
+                    else
+                    {
+                        this.MVideo.Source = new Uri(System.Windows.Forms.Application.StartupPath + "\\Source.mp4", UriKind.RelativeOrAbsolute);
+                        srcstat = 2;
+                    }
                 }
                 else
-                    this.MVideo.Source = new Uri("Source.mp4", UriKind.Relative);
+                {
+                    this.MVideo.Source = new Uri("Source.mp4", UriKind.RelativeOrAbsolute);
+                    srcstat = 1;
+                }
             }
-            else
+            if ((cfgstat == 0) && (srcstat == 0))
+            {
+                System.Windows.MessageBox.Show("Cannot Found Config and Source File!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.Application.Current.Shutdown();
+            }
+            if (cfgstat == 1)
+                config = File.ReadAllLines("config.ini");
+            if (cfgstat == 2)
+                config = File.ReadAllLines(System.Windows.Forms.Application.StartupPath + "\\config.ini");
+            try
             {
                 bool isf = false;
-                string[] config = File.ReadAllLines("config.ini");
                 for (int i = 0; i < config.Length; i++)
                 {
                     string[] args = config[i].Split('=');
@@ -148,15 +176,22 @@ namespace BackgroundDynamic
                 {
                     if (mode == Mode.Video)
                     {
-                        if (!File.Exists("Source.mp4"))
+                        if (srcstat == 0)
                         {
-                            System.Windows.MessageBox.Show("Cannot Found Config and Source File!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            System.Windows.MessageBox.Show("Cannot Found Source File!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                             System.Windows.Application.Current.Shutdown();
                         }
-                        else
+                        if (srcstat == 1)
                             this.MVideo.Source = new Uri("Source.mp4", UriKind.Relative);
+                        if (srcstat == 2)
+                            this.MVideo.Source = new Uri(System.Windows.Forms.Application.StartupPath + "\\Source.mp4", UriKind.Relative);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.ToString(), ex.Message, MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.Application.Current.Shutdown();
             }
             if (mode == Mode.Video)
             {

@@ -42,6 +42,19 @@ namespace BackgroundDynamic
         }
         private void dwm_init()
         {
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                this.notifyIcon.ShowBalloonTip(2000, "不支持当前系统", "您的系统不受支持", ToolTipIcon.Error);
+                System.Windows.Application.Current.Shutdown();
+            }
+            else if (Environment.OSVersion.Version.Major == 6)
+            {
+                if (Environment.OSVersion.Version.Minor < 2)
+                {
+                    this.notifyIcon.ShowBalloonTip(2000, "不支持当前系统", "您的系统不受支持", ToolTipIcon.Error);
+                    System.Windows.Application.Current.Shutdown();
+                }
+            }
             IntPtr programIntPtr = IntPtr.Zero;
             try
             {
