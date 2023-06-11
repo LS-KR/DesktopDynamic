@@ -1,0 +1,10 @@
+.vs/
+.vscode/
+
+bin/
+obj/
+
+.idea/
+
+src/.vs/
+src/packages/
