@@ -87,7 +87,7 @@ namespace BackgroundDynamic {
                 if ((!isexc) && s) {
                     RKey.SetValue("BackgroundDynamic", execPath);
                 }
-                else if (isexc && (!s) {
+                else if (isexc && (!s)) {
                     RKey.DeleteValue("BackgroundDynamic");
                 }
                 try {
