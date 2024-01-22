@@ -6,5 +6,6 @@ obj/
 
 .idea/
 
-src/.vs/
-src/packages/
+packages/
+**/bin/
+**/obj/
