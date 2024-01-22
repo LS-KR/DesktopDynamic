@@ -12,6 +12,8 @@ namespace BackgroundDynamic {
             exit.Click += new EventHandler(Exit_Handle);
             System.Windows.Forms.MenuItem autostartup = new System.Windows.Forms.MenuItem("Start when login");
             autostartup.Click += new EventHandler(Autostartup_Handle);
+            System.Windows.Forms.MenuItem delstartup = new System.Windows.Forms.MenuItem("Delete start entry when login");
+            delstartup.Click += new EventHandler(DelStartUp_Handle);
             System.Windows.Forms.MenuItem playpause = new System.Windows.Forms.MenuItem("Pause/Play");
             playpause.Click += new EventHandler(Play_Pause_Handle);
             mute.Click += Mute_Click_Handle;

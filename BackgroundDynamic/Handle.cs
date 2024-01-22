@@ -16,7 +16,20 @@ namespace BackgroundDynamic {
             }
             else {
                 try {
-                    autorun();
+                    autorun(true);
+                }
+                catch (Exception ex) {
+                    notifyIcon.ShowBalloonTip(2000, "设置失败", ex.Message, System.Windows.Forms.ToolTipIcon.Error);
+                }
+            }
+        }
+        public void DelStartUp_Handle(object sender, EventArgs e) {
+            if (!IsAdministrator()) {
+                notifyIcon.ShowBalloonTip(2000, "设置失败", "Access Denied.", System.Windows.Forms.ToolTipIcon.Error);
+            }
+            else {
+                try {
+                    autorun(false);
                 }
                 catch (Exception ex) {
                     notifyIcon.ShowBalloonTip(2000, "设置失败", ex.Message, System.Windows.Forms.ToolTipIcon.Error);
@@ -58,8 +71,8 @@ namespace BackgroundDynamic {
             WindowsPrincipal windowsPrincipal = new WindowsPrincipal(current);
             return windowsPrincipal.IsInRole(WindowsBuiltInRole.Administrator);
         }
-        private void autorun() {
-            //获取程序路径
+        private void autorun(bool s) {
+            //获取程序路径 
             string execPath = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
             bool isexc = false;
             try {
@@ -71,11 +84,14 @@ namespace BackgroundDynamic {
                         isexc = true;
                     }
                 }
-                if (!isexc) {
+                if ((!isexc) && s) {
                     RKey.SetValue("BackgroundDynamic", execPath);
                 }
+                else if (isexc && (!s) {
+                    RKey.DeleteValue("BackgroundDynamic");
+                }
                 try {
-                    notifyIcon.ShowBalloonTip(2000, "设置完成", "您可以在任务管理器中关闭开机自启", System.Windows.Forms.ToolTipIcon.Info);
+                    notifyIcon.ShowBalloonTip(2000, "设置完成", "", System.Windows.Forms.ToolTipIcon.Info);
                 }
                 catch { }
             }
