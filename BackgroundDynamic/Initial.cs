@@ -17,7 +17,7 @@ namespace BackgroundDynamic {
             System.Windows.Forms.MenuItem playpause = new System.Windows.Forms.MenuItem("Pause/Play");
             playpause.Click += new EventHandler(Play_Pause_Handle);
             mute.Click += Mute_Click_Handle;
-            System.Windows.Forms.MenuItem[] children = new System.Windows.Forms.MenuItem[] { playpause, mute, autostartup, exit };
+            System.Windows.Forms.MenuItem[] children = new System.Windows.Forms.MenuItem[] { playpause, mute, autostartup, delstartup, exit };
             notifyIcon.ContextMenu = new System.Windows.Forms.ContextMenu(children);
             notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
             notifyIcon.Visible = true;
