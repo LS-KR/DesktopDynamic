@@ -16,7 +16,7 @@
         mc:Ignorable="d"
         Loaded="Window_Loaded">
     <Grid>
-        <MediaElement x:Name="MVideo" Margin="0,0,0,0" Source="" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="UniformToFill" StretchDirection="Both"/>
+        <MediaElement x:Name="MVideo" Margin="0,0,0,0" Source="" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="UniformToFill" StretchDirection="Both" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <wv2:WebView2 x:Name="webview" Margin="0,0,0,0" Visibility="Collapsed"/>
     </Grid>
 </Window>
