@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BackgroundDynamic"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         Title="MainWindow" Height="450" Width="800"
         AllowsTransparency="True"
@@ -15,9 +16,7 @@
         mc:Ignorable="d"
         Loaded="Window_Loaded">
     <Grid>
-        <MediaElement x:Name="MVideo" Margin="0,0,0,0" Source="" LoadedBehavior="Manual" UnloadedBehavior="Stop"
-                      Stretch="UniformToFill" StretchDirection="Both" HorizontalAlignment="Center"
-                      VerticalAlignment="Center" />
-        <wv2:WebView2 x:Name="webview" Margin="0,0,0,0" Visibility="Collapsed" />
+        <MediaElement x:Name="MVideo" Margin="0,0,0,0" Source="" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="UniformToFill" StretchDirection="Both"/>
+        <wv2:WebView2 x:Name="webview" Margin="0,0,0,0" Visibility="Collapsed"/>
     </Grid>
 </Window>
